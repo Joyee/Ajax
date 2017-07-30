@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+      body,h4,ul {margin: 0;}
+      li {list-style: none;}
+      a {text-decoration: none;}
+      img {
+        max-width: 100%;
+        vertical-align: middle;
+      }
+      .movie {
+        width: 590px;
+        margin: 40px auto;
+        border: 1px solid #ccc;
+      }
+      .movie .header {
+        border-bottom: 1px solid #ccc;
+        height: 34px;
+        line-height: 34px;
+      }
+      .movie .header h4 {
+        float: left;
+      }
+      .movie .header ul {float: right;}
+      .movie .header ul li {float: left;margin-right: 5px;}
+      .clearfix {
+        display: block;
+      }
+      .clearfix:after{
+        content:"";
+        display:block;
+        height:0;
+        clear:both;
+        visibility:hidden;
+        }
+      .movie .content {width: 100%;}
+      .movie .content .movieList {
+        width: 608px;
+        margin:30px auto;
+      }
+      .movie .content div {
+        float: left;
+        width: 140px;
+        margin-right: 10px;
+      }
+</style>
+  <script>
+    function fn(data){
+      console.log(data.subjects);
+
+      var list=document.getElementById('list');
+
+      var movie=data.subjects;
+      var html='';
+      for(var i=0;i<movie.length;i++){
+        html+='<div><img src="'+movie[i].images.large+'" /><p>'+movie[i].title+'<strong>'+movie[i].rating.average+'</strong></p></div>';
+      }
+      list.innerHTML=html;
+    }
+    window.onload=function(){
+      var oQ=document.getElementById('q');
+      var oBtn=document.getElementById('btn');
+      oBtn.onclick=function(){
+        var oScript=document.createElement('script');
+        oScript.src='https://api.douban.com/v2/movie/search?q='+oQ.value+'&callback=fn';
+        document.body.appendChild(oScript);
+      }
+    }
+  </script>  
+</head>
+<body>
+  <div class="movie">
+    <div class="header">
+      <h4>最近热门电影
+        <input type="text" name="movie" placeholder="输入演员" id="q">
+        <input type="button" id="btn" value="搜索">
+      </h4>
+      <ul>
+        <li><a href="">热门</a></li>
+        <li><a href="">华语</a></li>
+        <li><a href="">欧美</a></li>
+        <li><a href="">韩国</a></li>
+      </ul>
+    </div>
+    <div class="content clearfix">
+      <div class="movieList" id="list">
+        
+      </div>
+    </div>
+  </div>
+</body>
+</html>
